@@ -3,18 +3,20 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Brain, Mail, Lock } from "lucide-react";
+import { Brain, Mail, Lock, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-const Login = () => {
+const Signup = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    
-    if (!email || !password) {
+
+    if (!name || !email || !password || !confirmPassword) {
       toast({
         title: "Error",
         description: "Please fill in all fields",
@@ -23,9 +25,18 @@ const Login = () => {
       return;
     }
 
+    if (password !== confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Passwords do not match",
+        variant: "destructive",
+      });
+      return;
+    }
+
     toast({
       title: "Success",
-      description: "Logged in successfully! (Demo mode)",
+      description: "Account created successfully! (Demo mode)",
     });
   };
 
@@ -41,11 +52,28 @@ const Login = () => {
         {/* Card */}
         <div className="glass-card p-8 rounded-2xl">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold mb-2">Welcome Back</h1>
-            <p className="text-muted-foreground">Sign in to continue your journey</p>
+            <h1 className="text-3xl font-bold mb-2">Create Account</h1>
+            <p className="text-muted-foreground">Start your wellness journey today</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Name */}
+            <div className="space-y-2">
+              <Label htmlFor="name">Full Name</Label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="John Doe"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="pl-10"
+                  required
+                />
+              </div>
+            </div>
+
             {/* Email */}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -80,24 +108,34 @@ const Login = () => {
               </div>
             </div>
 
-            {/* Forgot Password */}
-            <div className="flex justify-end">
-              <a href="#" className="text-sm text-primary hover:text-accent smooth-transition">
-                Forgot password?
-              </a>
+            {/* Confirm Password */}
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="pl-10"
+                  required
+                />
+              </div>
             </div>
 
             {/* Submit */}
             <Button type="submit" className="w-full bg-primary hover:bg-primary/90 py-6">
-              Sign In
+              Create Account
             </Button>
           </form>
 
-          {/* Sign Up Link */}
+          {/* Login Link */}
           <div className="mt-6 text-center text-sm">
-            <span className="text-muted-foreground">Don't have an account? </span>
-            <Link to="/signup" className="text-primary hover:text-accent smooth-transition font-medium">
-              Sign up
+            <span className="text-muted-foreground">Already have an account? </span>
+            <Link to="/login" className="text-primary hover:text-accent smooth-transition font-medium">
+              Sign in
             </Link>
           </div>
         </div>
@@ -106,4 +144,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

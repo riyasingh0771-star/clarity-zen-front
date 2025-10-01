@@ -32,16 +32,16 @@ const questions = [
 ];
 
 const MoodTest = () => {
-  const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [answers, setAnswers] = useState({});
   const [notes, setNotes] = useState("");
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const handleAnswerChange = (questionId: number, value: string) => {
+  const handleAnswerChange = (questionId, value) => {
     setAnswers((prev) => ({ ...prev, [questionId]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (Object.keys(answers).length < questions.length) {

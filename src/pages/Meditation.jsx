@@ -50,7 +50,7 @@ const sessions = [
 ];
 
 const Meditation = () => {
-  const [playing, setPlaying] = useState<number | null>(null);
+  const [playing, setPlaying] = useState(null);
 
   return (
     <div className="min-h-screen flex flex-col">

@@ -13,7 +13,7 @@ const Journal = () => {
   const [entry, setEntry] = useState("");
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!title.trim() || !entry.trim()) {
